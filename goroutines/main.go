@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	_ "sync"
-	"time"
 )
 
 type Message struct {
@@ -29,12 +28,11 @@ func main() {
 		Payload: "HI BIDEN",
 	}
 	msg1 := make(chan Message)
-	msg1 <- msg
 	s := &Server{
 		msgch: msg1,
 	}
-	time.Sleep(10 * time.Millisecond)
 	go s.StartandListen()
+	msg1 <- msg
 }
 
 // func main() {
