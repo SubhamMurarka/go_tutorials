@@ -22,17 +22,22 @@ func (s *Server) StartandListen() {
 	}
 }
 
-func main() {
+func sendMessage(msgch chan Message, payload string) {
 	msg := Message{
 		From:    "JOEBIDEN",
-		Payload: "HI BIDEN",
+		Payload: payload,
 	}
-	msg1 := make(chan Message)
+	msgch <- msg
+}
+
+func main() {
 	s := &Server{
-		msgch: msg1,
+		msgch: make(chan Message),
 	}
+
 	go s.StartandListen()
-	msg1 <- msg
+
+	sendMessage(s.msgch, "hi everyone")
 }
 
 // func main() {
